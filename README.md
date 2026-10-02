@@ -1,33 +1,19 @@
-# ARK STM32 projects
+# 方舟 STM32 开发板工程
 
-CubeMX and Keil MDK projects for the sibling ark_sdk repository. Clone both repositories into the same workspace; no symbolic links are used.
+本仓库保存 CubeMX 与 Keil MDK 工程，可在 Studio 中与独立 ark_sdk、App 和 Keil 组合使用。SDK 引用采用直接路径，不创建软链接。
 
-```text
-workspace/
-  ark_sdk/
-  ark_stm32_projects/
-    c8t6_demo/
-    c8t6_microcar_soil/
-    c8t6_usb_cdc/
-    c8t6_xiaoyan_net/
-```
+## 工程与输入文件
 
-The source snapshot retains .ioc/.mxproject, Core, Drivers, Middlewares, USB_DEVICE where applicable, startup assembly, .uvprojx, .uvoptx, RTE and debug configuration. .uvoptx is required by the SDK probe and flashing tools. CMSIS precompiled .lib/.a files are vendor inputs, not local output; keep their original licenses. SDK code remains in ark_sdk and is referenced by relative paths.
+包含 c8t6_demo、c8t6_microcar_soil、c8t6_usb_cdc、c8t6_xiaoyan_net。保留 IOC、.mxproject、Core、Drivers、Middlewares、USB_DEVICE、启动汇编、uvprojx、uvoptx、RTE 与调试配置。
 
-## Current workflow
+uvoptx 是探针和烧录工具的必要输入。CMSIS 的预编译 lib/a 是厂商输入，不是本地构建产物；保留原授权。
 
-Use c8t6_microcar_soil or c8t6_xiaoyan_net (SDK App c8t6_ark_net) with the maintained DTS workflow:
+## 开发
 
-```powershell
-cd ../ark_sdk
-python -m studio.cli configure app/c8t6_microcar_soil --dry-run
-python -m studio.cli configure app/c8t6_ark_net --dry-run
-```
+在 Rust Studio 选择该仓库中的工程文件，再明确选择 Target。可单独编译工程；同步 SDK/App 时还需要选择 SDK 与 DTS，并验证芯片兼容性。同步仅修改所选 Target，新建工程保持统一名称。
 
-After editing a DTS, run configure without --dry-run to regenerate OF data and synchronize the selected source closure. Keil MDK, the required device packs and ARM compiler are needed for firmware builds. c8t6_demo and c8t6_usb_cdc retain legacy JSON-based application examples; their source references have been refreshed from the current SDK catalogs, but they are not maintained DTS Apps.
+完整构建需要 Keil、对应设备包和 ARM 编译器。编译输出、固件、日志和个人 IDE 会话不提交；CubeMX 生成的 C/H 为构建输入，不手改。
 
-Generated Keil output directories, object files, firmware images, reports, local IDE sessions and logs are ignored. CubeMX-generated C/H files are versioned build inputs and must not be hand-edited. Third-party code retains its own licenses.
+## 验证
 
-## Verification status
-
-The network firmware rebuild passes. The soil-probe car currently exceeds configured Flash at link time; legacy demo/USB Apps still require DTS/API migration. These limitations are preserved and documented in [SOURCE-VERIFICATION.md](SOURCE-VERIFICATION.md), rather than changing hardware capacity or application behavior during source publication.
+网络板完整构建通过。土壤车超过 Flash，两个历史 JSON 示例需要 DTS/API 迁移。详细记录见 [验证说明](SOURCE-VERIFICATION.md)。
