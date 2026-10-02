@@ -1,0 +1,22 @@
+# Keil output directories; retain project and probe configuration
+/*/MDK-ARM/c8t6_*/
+!/*/MDK-ARM/RTE/
+!/*/MDK-ARM/DebugConfig/
+*.uvguix.*
+*.uvprojx.bak
+*.uvoptx.bak
+/*/MDK-ARM/*.lst
+/*/MDK-ARM/*.o
+/*/MDK-ARM/*.obj
+/*/MDK-ARM/*.d
+/*/MDK-ARM/*.crf
+/*/MDK-ARM/*.axf
+/*/MDK-ARM/*.hex
+/*/MDK-ARM/*.map
+/*/MDK-ARM/*.lnp
+/*/MDK-ARM/*.htm
+*.log
+.env
+.env.*
+!.env.example
+.keil/
